@@ -1,0 +1,78 @@
+name: Research CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+      - release/**
+
+jobs:
+  test:
+    name: Run Tests on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run unit tests
+        run: pytest
+
+  format:
+    name: Code Style Check (black) on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install black
+        run: pip install black
+
+      - name: Run black
+        run: black --check .
+
+  notebook:
+    name: Execute Notebooks on ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Jupyter and dependencies
+        run: |
+          pip install pytest
+          pip install -r requirements.txt
+          pip install jupyter nbconvert
+
+      - name: Execute notebooks
+        shell: bash
+        run: |
+          find . -name "*.ipynb" -not -path "./.ipynb_checkpoints/*" | while read nb; do
+            jupyter nbconvert --to notebook --execute "$nb" --output /dev/null
+          done
