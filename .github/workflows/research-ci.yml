@@ -51,7 +51,7 @@ jobs:
         run: black --check .
 
   notebook:
-    name: Execute Notebooks on ${{ matrix.os }}
+    name: Execute Notebooks on ${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
