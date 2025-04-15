@@ -1,0 +1,24 @@
+# Deep Learning Core
+torch
+torchvision
+torchaudio
+
+# Or for TensorFlow instead:
+# tensorflow
+
+# Data Science
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+
+# Jupyter & Notebook Execution
+jupyter
+nbconvert
+
+# Linting and Formatting
+black
+
+# Testing
+pytest
