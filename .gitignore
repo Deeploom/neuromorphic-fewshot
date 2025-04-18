@@ -1,0 +1,21 @@
+# Python bytecode files
+*.pyc
+
+# Vim swap files
+*.swp
+
+# Egg information
+*.egg-info/
+
+# Results directory
+results/
+
+# Data directories (e.g., nested data folders)
+data/*/data
+
+# Distribution and build directories
+dist/
+build/
+
+# Python zip files
+*.zip
